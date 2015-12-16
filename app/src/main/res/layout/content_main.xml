@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TabHost
+        android:id="@+id/tabhost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="100"
+            android:orientation="vertical">
+
+            <SearchView
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="10">
+            </SearchView>
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="10">
+            </TabWidget>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="80">
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </TabHost>
+
+</LinearLayout>

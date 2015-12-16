@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16sp"
+    android:paddingRight="16sp"
+    android:weightSum="100"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="35"
+        android:weightSum="100"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="10">
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="30"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="15"
+                android:src="@mipmap/ic_launcher"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="10"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="20"
+                android:text="전상현"
+                android:textSize="12sp"
+                android:textColor="@android:color/black"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="10"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="80"
+                android:text="자기 소개 글~"
+                android:textColor="@android:color/black"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="10"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="12"
+                android:text="총 게시글 :"
+                android:textColor="@android:color/black"
+                android:textSize="8sp"
+                android:gravity="center|right"/>
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:text="8"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="5">
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="25"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            android:gravity="center">
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="45"
+                android:weightSum="3"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="팔로잉"
+                    android:textColor="@android:color/black"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:text="182"
+                    android:textColor="@android:color/black"
+                    android:textSize="27sp"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="45"
+                android:weightSum="3"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="팔로워"
+                    android:textColor="@android:color/black"
+                    android:textSize="10sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:text="109"
+                    android:textColor="@android:color/black"
+                    android:textSize="27sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="3">
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="62"
+        android:orientation="vertical"
+        android:weightSum="100">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="12"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="내 게시글"
+                android:textSize="10sp"
+                android:textColor="@android:color/black"/>
+
+            <Button
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="태그 당한 글"
+                android:textSize="10sp"
+                android:textColor="@android:color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="12"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+
+            <Button
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="사진 위주로 펼쳐보기"
+                android:textSize="10sp"
+                android:textColor="@android:color/black"/>
+
+            <Button
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="하루 식단 별로 나눠 보기"
+                android:textSize="10sp"
+                android:textColor="@android:color/black"/>
+
+        </LinearLayout>
+
+        <GridView
+            android:id="@+id/me_Grid"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="76"
+            android:numColumns="3">
+        </GridView>
+
+    </LinearLayout>
+
+</LinearLayout>
