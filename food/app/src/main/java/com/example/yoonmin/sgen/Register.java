@@ -13,7 +13,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 
+import com.fooding.connectserver.userConnect;
 /**
  * Created by yoonm on 2016-01-12.
  */
@@ -47,19 +49,18 @@ public class Register extends Activity{
     }
 
     private void registerUser() {
-        String email = Edit_EMAIL.getText().toString().trim().toLowerCase();
-        String password = Edit_PW.getText().toString().trim().toLowerCase();
-        String name = Edit_NAME.getText().toString().trim().toLowerCase();
-        String phone = Edit_PHONE.getText().toString().trim().toLowerCase();
+        String email = Edit_EMAIL.getText().toString().trim();
+        String password = Edit_PW.getText().toString().trim();
+        String name = Edit_NAME.getText().toString().trim();
+        String phone = Edit_PHONE.getText().toString().trim();
 
         register(email,password,name,phone);
     }
 
     private void register(String email,String password,String name,String phone) {
-        String urlSuffix = "?email="+email+"&name="+name+"&password="+password+"&phone="+phone;
         class RegisterUser extends AsyncTask<String, Void, String> {
             ProgressDialog loading;
-
+            userConnect ruc = new userConnect();
 
             @Override
             protected void onPreExecute() {
@@ -76,25 +77,19 @@ public class Register extends Activity{
 
             @Override
             protected String doInBackground(String... params) {
-                String s = params[0];
-                BufferedReader bufferedReader = null;
-                try {
-                    URL url = new URL(REGISTER_URL + s);
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                HashMap<String, String> data = new HashMap<String,String>();
+                data.put("email",params[0]);
+                data.put("password",params[1]);
+                data.put("name",params[2]);
+                data.put("phone",params[3]);
 
-                    String result;
+                String result = ruc.sendPostRequest(REGISTER_URL,data);
 
-                    result = bufferedReader.readLine();
-
-                    return result;
-                } catch (Exception e) {
-                    return null;
-                }
+                return result;
             }
         }
 
         RegisterUser ru = new RegisterUser();
-        ru.execute(urlSuffix);
+        ru.execute(email,password,name,phone);
     }
 }
