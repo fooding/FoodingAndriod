@@ -1,0 +1,95 @@
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="100"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="20"
+        android:weightSum="7"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="3">
+
+            <TextView
+                android:id="@+id/TimeLine_Title"
+                android:paddingLeft="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="떡볶이"
+                android:textColor="@android:color/black"
+                android:textSize="17dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="4">
+
+            <TextView
+                android:id="@+id/TimeLine_Information"
+                android:paddingLeft="15dp"
+                android:paddingBottom="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="항상 이 시간쯤에 떡볶이 드시죠?"
+                android:textColor="#989898"
+                android:textSize="15dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="60">
+
+        <ImageView
+            android:id="@+id/TimeLine_Image"
+            android:paddingBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/jajang"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="20"
+        android:weightSum="10"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="3">
+
+            <TextView
+                android:paddingLeft="15dp"
+                android:paddingBottom="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="인기 해시태그"
+                android:textColor="#ff4040"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="7">
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
