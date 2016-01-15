@@ -54,6 +54,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Map;
 
+import com.fooding.connectserver.findFood;
+
 import javax.net.ssl.HttpsURLConnection;
 
 import static android.provider.MediaStore.Images.Media;
@@ -442,7 +444,9 @@ public class Example extends Activity {
     private void addRadioitem(RecognitionResult result){
         StringBuilder b = new StringBuilder();
         for (Tag tag : result.getTags()) {
-
+            findFood a = new findFood();
+            if (!a.canfind(tag.getName()))
+                continue;
             newRow = new TableRow(this);
             check = new CheckBox(this);
 
