@@ -2,13 +2,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="14">
+    android:weightSum="14.4">
 
     <ImageView
         android:id="@+id/image_view"
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="4"
+        android:layout_weight="7"
         android:scaleType="fitXY"
         android:contentDescription="@string/user_image"/>
 
@@ -28,7 +28,8 @@
                 android:id="@+id/Edit_Tag_Add"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="태그 추가"/>
+                android:hint="태그 추가"
+                android:textColorHint="#f1baba"/>
 
         </LinearLayout>
 
@@ -37,15 +38,21 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="+"
-            android:textSize="10sp"/>
+            android:background="@drawable/add"/>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="0.2"
+        android:background="#f1baba">
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="4">
+        android:layout_weight="3">
 
         <TableLayout
             android:id="@+id/table"
@@ -55,14 +62,39 @@
 
     </ScrollView>
 
-    <EditText
-        android:id="@+id/Edit_text"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="4"
-        android:maxLength="100"
-        android:maxLines="5"
-        android:hint="글 쓰는 곳"/>
+        android:layout_weight="0.2"
+        android:background="#f1baba">
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="2"
+        android:weightSum="100"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="25"
+            android:text="글 쓰는 곳"
+            android:gravity="center"
+            android:textSize="19sp"
+            android:textColor="#f1baba"/>
+
+        <EditText
+            android:id="@+id/Edit_text"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="75"
+            android:maxLength="100"
+
+            android:lines="5"/>
+
+    </LinearLayout>
 
 
     <LinearLayout
@@ -76,8 +108,7 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#3d88ec"
-            android:text="사진 찍기"
+            android:background="@drawable/takepicture"
 
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
@@ -88,8 +119,7 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#3d88ec"
-            android:text="사진 선택"
+            android:background="@drawable/select"
 
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
@@ -99,8 +129,7 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#3d88ec"
-            android:text="글쓰기"
+            android:background="@drawable/write"
 
             android:paddingLeft="24dp"
             android:paddingRight="24dp"

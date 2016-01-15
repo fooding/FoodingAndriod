@@ -2,6 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="100"
+    android:background="#FF595E"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -10,13 +11,10 @@
         android:layout_height="0dip"
         android:layout_weight="40">
 
-        <TextView
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="푸우디잉~!"
-            android:gravity="center"
-            android:textSize="60sp"
-            android:textColor="@android:color/black"/>
+            android:src="@drawable/main_logo_2"/>
 
     </LinearLayout>
 
@@ -30,30 +28,46 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_weight="20">
+            android:layout_weight="20"
+            android:weightSum="100"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dip"
+                android:layout_weight="30"
                 android:layout_height="match_parent"
-                android:text="로그인"
-                android:gravity="center"
-                android:textSize="20sp"/>
+                android:background="@drawable/login"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_weight="15">
+            android:layout_weight="15"
+            android:weightSum="100"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="30">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/id"/>
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/Edit_ID"
-                android:layout_width="match_parent"
+                android:layout_width="0dip"
                 android:layout_height="match_parent"
-                android:hint="아이디"
+                android:layout_weight="70"
                 android:singleLine="true"
                 android:textSize="30sp"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/white"/>
 
         </LinearLayout>
 
@@ -66,17 +80,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dip"
-            android:layout_weight="15">
+            android:layout_weight="15"
+            android:weightSum="100"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="30">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/pw"/>
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/Edit_PW"
-                android:layout_width="match_parent"
+                android:layout_width="0dip"
                 android:layout_height="match_parent"
+                android:layout_weight="70"
                 android:password="true"
-                android:hint="비밀번호"
                 android:singleLine="true"
                 android:textSize="30sp"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/white"/>
 
         </LinearLayout>
 
@@ -90,22 +118,42 @@
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="10"
-            android:orientation="horizontal"
+            android:weightSum="10"
             android:gravity="center">
 
             <Button
                 android:id="@+id/Btn_Login"
-                android:layout_width="wrap_content"
+                android:layout_width="0dip"
+                android:layout_weight="2.5"
                 android:layout_height="match_parent"
-                android:text="로그인"/>
+                android:background="@drawable/ok_2"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="4">
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="10"
+            android:weightSum="10"
+            android:gravity="center">
 
             <Button
                 android:id="@+id/Btn_Register"
-                android:layout_width="wrap_content"
+                android:layout_width="0dip"
+                android:layout_weight="3.5"
                 android:layout_height="match_parent"
-                android:text="회원가입"/>
+                android:background="@drawable/regi"/>
 
         </LinearLayout>
+
+
+
 
     </LinearLayout>
 

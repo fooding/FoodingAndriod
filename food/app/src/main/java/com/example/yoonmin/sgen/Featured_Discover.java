@@ -41,11 +41,11 @@ public class Featured_Discover extends Activity{
 
         adapter.additem(getResources().getDrawable(R.drawable.tbk), "떡볶이", "항상 이시간 쯤에 떡볶이를 드시죠?");
 
-        adapter.additem(getResources().getDrawable(R.drawable.jajang), "title", "sadsadsa");
+        adapter.additem(getResources().getDrawable(R.drawable.eggroll), "계란말이", "간단한 한끼식사 계란말이 추천!!");
 
-        adapter.additem(getResources().getDrawable(R.drawable.jajang), "title", "cfsdfdsfds");
+        adapter.additem(getResources().getDrawable(R.drawable.bockbock), "제육볶음", "밥도둑! 제육볶음은 어떤가요?");
 
-        adapter.additem(getResources().getDrawable(R.drawable.jajang), "title", "cfsdfdsfds");
+        adapter.additem(getResources().getDrawable(R.drawable.zockbal), "족발", "야식이라면 역시 족발이죠!");
 
     }
 

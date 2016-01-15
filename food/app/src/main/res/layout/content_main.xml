@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:layout_weight="11"
-                android:background="#ff2424">
+                android:background="#ff6c5f">
             </TabWidget>
 
             <FrameLayout

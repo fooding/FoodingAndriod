@@ -18,7 +18,8 @@
         android:layout_height="0dip"
         android:layout_weight="10"
         android:textSize="15sp"
-        android:textColor="@android:color/black"
-        android:text="글 불러오기"/>
+        android:background="#ff6c5f"
+        android:textColor="@android:color/white"
+        android:text="글 불러오기" />
 
 </LinearLayout>

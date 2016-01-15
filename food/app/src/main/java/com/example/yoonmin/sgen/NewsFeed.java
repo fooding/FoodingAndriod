@@ -18,6 +18,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by yoonmin on 2015-11-22.
@@ -25,6 +26,9 @@ import java.util.ArrayList;
 public class NewsFeed extends Activity {
 
     int countDiary = 0;
+
+    int[] data = {R.drawable.bockbock,R.drawable.chick,R.drawable.douts,R.drawable.eggroll,R.drawable.kimchi,R.drawable.zockbal,
+            R.drawable.jeuock,R.drawable.miyock,R.drawable.sogogi};
 
     TextView Tag1, Tag2, Tag3, Tag4, UserName, How, Where, When, Timeset, Text_Title, Text_information;
 
@@ -56,13 +60,18 @@ public class NewsFeed extends Activity {
             @Override
             public void onClick(View v) {
 
+                Random rand = new Random();
+
                 for(int i = 0 ; i < 5 ; i++){
 
-                    if((받아오는 값) != null){
-                    adapter.additem(getResources().getDrawable(R.drawable.shh_2), getResources().getDrawable(R.drawable.shh_1),
-                            "전상현", "20", "여주 어느 펜션", "", "분 전", "1월 2일의 저녁",
-                            "나는 왜 고기를 구워야 하는가... 내 앞에 있는 최승은 짜증나지만 고기는 맛있다!", "여주", "어느 펜션", "삽겹살", "연기");
-                    }
+                    int randnum = rand.nextInt(9);
+
+            //        if((받아오는 값) != null){
+                    adapter.additem(getResources().getDrawable(R.drawable.shh_2), getResources().getDrawable(data[randnum]),
+                            "전상현", "20", "여주 어느 펜션", "5", "분 전", "1월 2일의 저녁",
+                            "오늘의 식단입니다!", "여주", "어느 펜션", "삽겹살", "연기");
+
+                //    }
                 }
                 listview.setAdapter(adapter);
             }

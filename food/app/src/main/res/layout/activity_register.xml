@@ -2,6 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="100"
+    android:background="#FF595E"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -10,23 +11,39 @@
         android:layout_height="0dip"
         android:layout_weight="40">
 
-        <TextView
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="회에워언가아이입"
-            android:gravity="center"
-            android:textSize="40sp"/>
+            android:src="@drawable/register_mail"/>
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/Edit_NAME"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="10"
-        android:singleLine="true"
-        android:maxLength="10"
-        android:hint="이름"/>
+        android:weightSum="100"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="25"
+            android:background="@drawable/name">
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/Edit_NAME"
+            android:layout_width="0dip"
+            android:layout_weight="75"
+            android:layout_height="match_parent"
+            android:singleLine="true"
+            android:maxLength="10"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,14 +51,33 @@
         android:layout_weight="2">
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/Edit_EMAIL"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="10"
-        android:singleLine="true"
-        android:maxLength="20"
-        android:hint="이메일(아이디)"/>
+        android:weightSum="100"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="25"
+            android:background="@drawable/mail">
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/Edit_EMAIL"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="75"
+            android:singleLine="true"
+            android:maxLength="20"
+            android:inputType="textEmailAddress"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,15 +85,31 @@
         android:layout_weight="2">
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/Edit_PW"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="10"
-        android:singleLine="true"
-        android:maxLength="20"
-        android:inputType="numberPassword"
-        android:hint="비밀번호"/>
+        android:weightSum="100"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="25"
+            android:background="@drawable/pw">
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/Edit_PW"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="75"
+            android:singleLine="true"
+            android:maxLength="20"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,33 +117,52 @@
         android:layout_weight="2">
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/Edit_PHONE"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="10"
-        android:singleLine="true"
-        android:inputType="phone"
-        android:hint="전화번호"/>
+        android:weightSum="100"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="25"
+            android:background="@drawable/phone">
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/Edit_PHONE"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="75"
+            android:singleLine="true"
+            android:maxLength="20"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="5">
+        android:layout_weight="2">
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="10"
+        android:weightSum="100"
         android:orientation="horizontal"
         android:gravity="center">
 
         <Button
             android:id="@+id/Btn_Result"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
+            android:layout_weight="25"
             android:layout_height="match_parent"
-            android:text="확인"/>
+            android:background="@drawable/ok"/>
 
     </LinearLayout>
 

@@ -1,6 +1,7 @@
 package com.example.yoonmin.sgen;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.graphics.Bitmap.Config;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -76,6 +78,9 @@ public class Example extends Activity {
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().setStatusBarColor(Color.BLACK);
         setContentView(R.layout.activity_clarifai);
         imageView = (ImageView) findViewById(R.id.image_view);
         table = (TableLayout) findViewById(R.id.table);
