@@ -10,7 +10,8 @@ public class Configure {
    // public static final String LOGIN_URL = "http://foodingtest.azurewebsites.net/login.php";
 
     public static final String LOGIN_URL = "http://211.202.243.45/login.php";
-    public static final String UPLOAD_URL = "http://211.202.243.45/write.php";
+    public static final String UPLOAD_URL = "http://211.202.243.45/writeDiary.php";
+    public static final String imageURL = "http://211.202.243.45/readDiary.php?id=";
 
     //Keys for email and password as defined in our $_POST['key'] in login.php
 

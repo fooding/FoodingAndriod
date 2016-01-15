@@ -77,7 +77,7 @@ public class Example extends Activity {
     private static final int CODE_PICK = 1;
     private static final int TAKE_PICTURE=2;
     private static final int UPLOAD_PICTURE = 3;
-    public static final String UPLOAD_URL = "http://211.202.243.45/writeDiary.php";
+
     private final ClarifaiClient client = new ClarifaiClient(APP_ID, APP_SECRET);
     private Button selectButton,takeButton,okButton, Btn_Add;
     private ImageView imageView;
@@ -429,7 +429,7 @@ public class Example extends Activity {
                 data.put(Configure.KEY_EMAIL, Configure.email);
                 data.put(Configure.KEY_TAGS, SUDOTAGS);
                 data.put(Configure.KEY_TEXT, getText(editText));
-                String result = rh.sendPostRequest(UPLOAD_URL,data);
+                String result = rh.sendPostRequest(Configure.UPLOAD_URL,data);
 
                 return result;
             }
