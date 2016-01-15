@@ -1,5 +1,7 @@
 package com.fooding.connectserver;
 
+import android.widget.EditText;
+
 /**
  * Created by davinnovation on 2016-01-13.
  */
@@ -19,6 +21,8 @@ public class Configure {
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_TAGS = "tag";
+    public static final String KEY_TEXT = "text";
+
     //If server response is equal to this that means login is successful
     public static final String LOGIN_SUCCESS = "success";
     public static boolean loggedIn = false;

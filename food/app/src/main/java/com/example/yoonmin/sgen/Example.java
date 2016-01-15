@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -80,7 +81,8 @@ public class Example extends Activity {
     private final ClarifaiClient client = new ClarifaiClient(APP_ID, APP_SECRET);
     private Button selectButton,takeButton,okButton;
     private ImageView imageView;
-
+    public String txt;
+    private EditText editText;
     private TextView textView;
 
     private Bitmap bitmap;
@@ -103,7 +105,8 @@ public class Example extends Activity {
         takeButton=(Button) findViewById(R.id.take_button);
         selectButton = (Button) findViewById(R.id.select_button);
         okButton=(Button) findViewById(R.id.OK);
-
+        editText=(EditText) findViewById(R.id.Edit_text);
+        txt=editText.getText().toString();
 
 
 
@@ -128,36 +131,11 @@ public class Example extends Activity {
                 }
 
                 Log.d("checkedTAG",tags);
-
                 SUDOTAGS = tags;
                 uploadImage();
 
-
-/*
-                Intent intent = new Intent(getApplicationContext(),Write.class);
-                startActivity(intent);
-*/
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-        ////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
 
 
 
@@ -227,9 +205,13 @@ public class Example extends Activity {
 
 
 
+    }
 
+    public String getText(EditText edit){
 
+        String str = String.valueOf(edit.getText());
 
+        return str;
     }
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -261,7 +243,7 @@ public class Example extends Activity {
             options.inPreferredConfig = Config.RGB_565;
             bitmap = BitmapFactory.decodeFile(filePath, options);
             imageView.setImageBitmap(bitmap);
-            textView.setText("Recognizing...");
+            Toast.makeText(getApplicationContext(), "Recognizing...", Toast.LENGTH_SHORT).show();
             selectButton.setEnabled(false);
 
             new AsyncTask<Bitmap, Void, RecognitionResult>() {
@@ -275,20 +257,7 @@ public class Example extends Activity {
 
         }
 
-/////////////////////////////////
-        /*
-         else if (requestCode == UPLOAD_PICTURE && resultCode == RESULT_OK && intent != null && intent.getData() != null) {
 
-            filePathByUri = intent.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathByUri);
-                imageView.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        */
-///////////////////////////////
 
 
 
@@ -428,10 +397,12 @@ public class Example extends Activity {
                 Bitmap bitmap = params[0];
                 String uploadImage = getStringImage(bitmap);
 
+
                 HashMap<String,String> data = new HashMap<>();
                 data.put(UPLOAD_KEY, uploadImage);
                 data.put(Configure.KEY_EMAIL, Configure.email);
                 data.put(Configure.KEY_TAGS, SUDOTAGS);
+                data.put(Configure.KEY_TEXT, getText(editText));
                 String result = rh.sendPostRequest(UPLOAD_URL,data);
 
                 return result;
@@ -451,10 +422,6 @@ public class Example extends Activity {
 
             check.setId(Count);
             check.setText(tag.getName());
-
-//            radioButton[Count] = radio;
-//            radioButton[Count].setId(Count);
-//            radioButton[Count].setText(tag.getName());
 
             Log.d("id", String.valueOf(check.getId()));
             Log.d("tag", tag.getName());
