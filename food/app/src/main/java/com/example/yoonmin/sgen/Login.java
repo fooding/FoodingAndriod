@@ -117,6 +117,7 @@ public class Login extends Activity{
                             //Starting profile activity
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
+                            finish();
                         }else{
                             //If the server response is not success
                             //Displaying an error message on toast
