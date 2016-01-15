@@ -79,7 +79,7 @@ public class Example extends Activity {
     private static final int UPLOAD_PICTURE = 3;
     public static final String UPLOAD_URL = "http://211.202.243.45/writeDiary.php";
     private final ClarifaiClient client = new ClarifaiClient(APP_ID, APP_SECRET);
-    private Button selectButton,takeButton,okButton;
+    private Button selectButton,takeButton,okButton, Btn_Add;
     private ImageView imageView;
     public String txt;
     private EditText editText;
@@ -87,10 +87,13 @@ public class Example extends Activity {
 
     private Bitmap bitmap;
     private TableLayout table;
+    private CheckBox check;
+    private TableRow newRow;
     private int Count = 0;
 
     private Uri filePathByUri;
     private String filePath;
+    private EditText Edit_tag_Add;
     private String folderName = "Arcanelux";// 폴더명
     private String fileName = "CameraIntent"; // 파일명
     public static final String UPLOAD_KEY = "image";
@@ -104,6 +107,8 @@ public class Example extends Activity {
         table = (TableLayout) findViewById(R.id.table);
         takeButton=(Button) findViewById(R.id.take_button);
         selectButton = (Button) findViewById(R.id.select_button);
+        Edit_tag_Add = (EditText) findViewById(R.id.Edit_Tag_Add);
+        Btn_Add = (Button) findViewById(R.id.Btn_Add);
         okButton=(Button) findViewById(R.id.OK);
         editText=(EditText) findViewById(R.id.Edit_text);
         txt=editText.getText().toString();
@@ -116,6 +121,27 @@ public class Example extends Activity {
 
 
         ////////////////////////////////////////////////////////////////////////////
+
+        Btn_Add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                check = new CheckBox(getApplicationContext());
+                newRow = new TableRow(getApplicationContext());
+
+                String tag = String.valueOf(Edit_tag_Add.getText());
+                check.setText(tag);
+                check.setTextColor(getResources().getColor(R.color.colorPrimary));
+                check.setId(Count);
+                check.setChecked(true);
+                newRow.addView(check);
+                table.addView(newRow);
+
+                taglist.add(check);
+
+                Count++;
+            }
+        });
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -417,8 +443,8 @@ public class Example extends Activity {
         StringBuilder b = new StringBuilder();
         for (Tag tag : result.getTags()) {
 
-            TableRow newRow = new TableRow(this);
-            CheckBox check = new CheckBox(this);
+            newRow = new TableRow(this);
+            check = new CheckBox(this);
 
             check.setId(Count);
             check.setText(tag.getName());
@@ -432,5 +458,6 @@ public class Example extends Activity {
             taglist.add(check);
             Count++;
         }
+
     }
 }
