@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -59,12 +60,15 @@ public class Example extends Activity {
     private static final int TAKE_PICTURE=2;
 
     private final ClarifaiClient client = new ClarifaiClient(APP_ID, APP_SECRET);
-    private Button selectButton,takeButton,okButton;
+    private Button selectButton,takeButton,okButton, Btn_Add;
     private ImageView imageView;
     private TableLayout table;
+    private CheckBox check;
+    private TableRow newRow;
     private int Count = 0;
 
     private String filePath;
+    private EditText Edit_tag_Add;
     private String folderName = "Arcanelux";// 폴더명
     private String fileName = "CameraIntent"; // 파일명
 
@@ -77,7 +81,30 @@ public class Example extends Activity {
         table = (TableLayout) findViewById(R.id.table);
         takeButton=(Button) findViewById(R.id.take_button);
         selectButton = (Button) findViewById(R.id.select_button);
+        Edit_tag_Add = (EditText) findViewById(R.id.Edit_Tag_Add);
+        Btn_Add = (Button) findViewById(R.id.Btn_Add);
         okButton=(Button) findViewById(R.id.OK);
+
+        Btn_Add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                check = new CheckBox(getApplicationContext());
+                newRow = new TableRow(getApplicationContext());
+
+                String tag = String.valueOf(Edit_tag_Add.getText());
+                check.setText(tag);
+                check.setTextColor(getResources().getColor(R.color.colorPrimary));
+                check.setId(Count);
+                check.setChecked(true);
+                newRow.addView(check);
+                table.addView(newRow);
+
+                taglist.add(check);
+
+                Count++;
+            }
+        });
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -314,8 +341,8 @@ public class Example extends Activity {
         StringBuilder b = new StringBuilder();
         for (Tag tag : result.getTags()) {
 
-            TableRow newRow = new TableRow(this);
-            CheckBox check = new CheckBox(this);
+            newRow = new TableRow(this);
+            check = new CheckBox(this);
 
             check.setId(Count);
             check.setText(tag.getName());
@@ -333,5 +360,6 @@ public class Example extends Activity {
             taglist.add(check);
             Count++;
         }
+
     }
 }
