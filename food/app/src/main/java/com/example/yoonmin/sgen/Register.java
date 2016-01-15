@@ -1,21 +1,18 @@
 package com.example.yoonmin.sgen;
 
-import android.app.ProgressDialog;
 import android.app.Activity;
-import android.os.Bundle;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.HashMap;
-
 import com.fooding.connectserver.userConnect;
+import com.fooding.connectserver.Config;
+import java.util.HashMap;
 /**
  * Created by yoonm on 2016-01-12.
  */
@@ -25,7 +22,6 @@ public class Register extends Activity{
 
     Button Btn_Result;
 
-    private static final String REGISTER_URL = "http://foodingtest.azurewebsites.net/register.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +40,9 @@ public class Register extends Activity{
             @Override
             public void onClick(View v) {
                 registerUser();
+                Intent intent = new Intent(getApplicationContext(), Login.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -83,7 +82,7 @@ public class Register extends Activity{
                 data.put("name",params[2]);
                 data.put("phone",params[3]);
 
-                String result = ruc.sendPostRequest(REGISTER_URL,data);
+                String result = ruc.sendPostRequest(Config.REGISTER_URL,data);
 
                 return result;
             }

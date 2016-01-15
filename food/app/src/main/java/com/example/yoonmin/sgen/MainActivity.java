@@ -16,7 +16,7 @@ public class MainActivity extends ActivityGroup {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setStatusBarColor(Color.BLACK);
+        //getWindow().setStatusBarColor(Color.BLACK);
         setContentView(R.layout.activity_main);
 
         createTab();
@@ -25,7 +25,7 @@ public class MainActivity extends ActivityGroup {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),Camera.class);
+                Intent intent = new Intent(getApplicationContext(),Example.class);
                 startActivity(intent);
             }
         });

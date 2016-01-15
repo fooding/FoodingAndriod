@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,9 @@ import com.fooding.connectserver.Config;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.fooding.connectserver.Config.SHARED_PREF_NAME;
+import static com.fooding.connectserver.Config.loggedIn;
+
 /**
  * Created by yoonm on 2016-01-12.
  */
@@ -30,7 +34,7 @@ public class Login extends Activity{
     EditText Edit_ID, Edit_PW;
     Button Btn_Login, Btn_Register;
 
-    private boolean loggedIn = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,16 @@ public class Login extends Activity{
 
         Btn_Login = (Button) findViewById(R.id.Btn_Login);
         Btn_Register = (Button) findViewById(R.id.Btn_Register);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(Config.LOGGEDIN_SHARED_PREF);
+        editor.remove(Config.EMAIL_SHARED_PREF);
+
+        editor.remove(SHARED_PREF_NAME);
+
+        editor.commit();
+        loggedIn=false;
 
         Btn_Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +94,6 @@ public class Login extends Activity{
     private void login() {
         final String email = Edit_ID.getText().toString().trim();
         final String password = Edit_PW.getText().toString().trim();
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.LOGIN_URL,
                 new Response.Listener<String>() {
                     @Override
@@ -88,6 +101,7 @@ public class Login extends Activity{
                         //If we are getting success from server
                         if(response.equalsIgnoreCase(Config.LOGIN_SUCCESS)){
                             //Creating a shared preference
+
                             SharedPreferences sharedPreferences = Login.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
                             //Creating editor to store values to shared preferences
@@ -101,7 +115,7 @@ public class Login extends Activity{
                             editor.commit();
 
                             //Starting profile activity
-                            Intent intent = new Intent(Login.this, NewsFeed.class);
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         }else{
                             //If the server response is not success

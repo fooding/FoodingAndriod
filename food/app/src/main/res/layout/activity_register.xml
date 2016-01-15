@@ -24,6 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="10"
+        android:singleLine="true"
+        android:maxLength="10"
         android:hint="이름"/>
 
     <LinearLayout
@@ -37,6 +39,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="10"
+        android:singleLine="true"
+        android:maxLength="20"
         android:hint="이메일(아이디)"/>
 
     <LinearLayout
@@ -50,6 +54,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="10"
+        android:singleLine="true"
+        android:maxLength="20"
+        android:inputType="numberPassword"
         android:hint="비밀번호"/>
 
     <LinearLayout
@@ -63,6 +70,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="10"
+        android:singleLine="true"
+        android:inputType="phone"
         android:hint="전화번호"/>
 
     <LinearLayout
