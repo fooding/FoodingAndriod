@@ -17,6 +17,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
@@ -27,4 +28,6 @@ dependencies {
     compile "com.clarifai:clarifai-api-java:1.2.0"
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.mcxiaoke.volley:library-aar:1.0.0'
+    compile group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5.1'
+
 }
