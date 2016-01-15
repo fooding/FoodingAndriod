@@ -18,7 +18,7 @@ public class Configure {
 
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";
-
+    public static final String KEY_TAGS = "tag";
     //If server response is equal to this that means login is successful
     public static final String LOGIN_SUCCESS = "success";
     public static boolean loggedIn = false;

@@ -14,7 +14,13 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -28,6 +34,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.hardware.Camera;
@@ -65,7 +72,7 @@ public class Example extends Activity {
     // These can be obtained at https://developer.clarifai.com/applications
     private static final String APP_ID = "N2gZQW_IqRAoTrQjpIm4oi2d17HGrSgG0xw5E3ok";
     private static final String APP_SECRET = "tklKPgiNudBUiAWhpplUDuwJT_Cy_f2JgBi9fNtv";
-
+    private String SUDOTAGS;
     private static final int CODE_PICK = 1;
     private static final int TAKE_PICTURE=2;
     private static final int UPLOAD_PICTURE = 3;
@@ -73,20 +80,26 @@ public class Example extends Activity {
     private final ClarifaiClient client = new ClarifaiClient(APP_ID, APP_SECRET);
     private Button selectButton,takeButton,okButton;
     private ImageView imageView;
+
     private TextView textView;
 
     private Bitmap bitmap;
+    private TableLayout table;
+    private int Count = 0;
 
     private Uri filePathByUri;
     private String filePath;
     private String folderName = "Arcanelux";// 폴더명
     private String fileName = "CameraIntent"; // 파일명
     public static final String UPLOAD_KEY = "image";
+
+    private ArrayList<CheckBox> taglist = new ArrayList<>();
+
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clarifai);
         imageView = (ImageView) findViewById(R.id.image_view);
-        textView = (TextView) findViewById(R.id.text_view);
+        table = (TableLayout) findViewById(R.id.table);
         takeButton=(Button) findViewById(R.id.take_button);
         selectButton = (Button) findViewById(R.id.select_button);
         okButton=(Button) findViewById(R.id.OK);
@@ -105,8 +118,25 @@ public class Example extends Activity {
             @Override
             public void onClick(View v) {
 
+                String tags ="";
+
+                for(int i = 0;i<taglist.size();i++)
+                {
+                    if(taglist.get(i).isChecked())
+                        tags += ("#" + taglist.get(i).getText() );
+
+                }
+
+                Log.d("checkedTAG",tags);
+
+                SUDOTAGS = tags;
                 uploadImage();
 
+
+/*
+                Intent intent = new Intent(getApplicationContext(),Write.class);
+                startActivity(intent);
+*/
             }
         });
 
@@ -210,7 +240,7 @@ public class Example extends Activity {
             bitmap = loadBitmapFromUri(intent.getData());
             if (bitmap != null) {
                 imageView.setImageBitmap(bitmap);
-                textView.setText("Recognizing...");
+                Toast.makeText(getApplicationContext(), "Recognizing...", Toast.LENGTH_SHORT).show();
                 selectButton.setEnabled(false);
                 // Run recognition on a background thread since it makes a network call.
                 new AsyncTask<Bitmap, Void, RecognitionResult>() {
@@ -222,8 +252,7 @@ public class Example extends Activity {
                     }
                 }.execute(bitmap);
             } else {
-                textView.setText("Unable to load selected image.");
-
+                Toast.makeText(getApplicationContext(), "Unable to load selected image.", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -323,17 +352,13 @@ public class Example extends Activity {
         if (result != null) {
             if (result.getStatusCode() == RecognitionResult.StatusCode.OK) {
                 // Display the list of tags in the UI.
-                StringBuilder b = new StringBuilder();
-                for (Tag tag : result.getTags()) {
-                    b.append(b.length() > 0 ? ", " : "").append(tag.getName());
-                }
-                textView.setText("Tags:\n" + b);
+                addRadioitem(result);
             } else {
                 Log.e(TAG, "Clarifai: " + result.getStatusMessage());
-                textView.setText("Sorry, there was an error recognizing your image.");
+                Toast.makeText(getApplicationContext(), "Sorry, there was an error recognizing your image.", Toast.LENGTH_SHORT).show();
             }
         } else {
-            textView.setText("Sorry, there was an error recognizing your image.");
+            Toast.makeText(getApplicationContext(), "Sorry, there was an error recognizing your image.", Toast.LENGTH_SHORT).show();
         }
         selectButton.setEnabled(true);
     }
@@ -373,6 +398,7 @@ public class Example extends Activity {
         return optSize;
     }
 
+
     public String getStringImage(Bitmap bmp){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -405,7 +431,7 @@ public class Example extends Activity {
                 HashMap<String,String> data = new HashMap<>();
                 data.put(UPLOAD_KEY, uploadImage);
                 data.put(Configure.KEY_EMAIL, Configure.email);
-
+                data.put(Configure.KEY_TAGS, SUDOTAGS);
                 String result = rh.sendPostRequest(UPLOAD_URL,data);
 
                 return result;
@@ -416,4 +442,28 @@ public class Example extends Activity {
         ui.execute(bitmap);
     }
 
+    private void addRadioitem(RecognitionResult result){
+        StringBuilder b = new StringBuilder();
+        for (Tag tag : result.getTags()) {
+
+            TableRow newRow = new TableRow(this);
+            CheckBox check = new CheckBox(this);
+
+            check.setId(Count);
+            check.setText(tag.getName());
+
+//            radioButton[Count] = radio;
+//            radioButton[Count].setId(Count);
+//            radioButton[Count].setText(tag.getName());
+
+            Log.d("id", String.valueOf(check.getId()));
+            Log.d("tag", tag.getName());
+
+            newRow.addView(check);
+            table.addView(newRow);
+
+            taglist.add(check);
+            Count++;
+        }
+    }
 }
