@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -53,6 +54,9 @@ import com.fooding.connectserver.Configure;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Map;
+
+import com.fooding.connectserver.Food;
+import com.fooding.connectserver.findFood;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -113,8 +117,8 @@ public class Example extends Activity {
         editText=(EditText) findViewById(R.id.Edit_text);
         txt=editText.getText().toString();
 
-
-
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
 
 
@@ -442,7 +446,10 @@ public class Example extends Activity {
     private void addRadioitem(RecognitionResult result){
         StringBuilder b = new StringBuilder();
         for (Tag tag : result.getTags()) {
-
+            if ( !(new findFood().canfind(tag.getName())) ) {
+                Log.d("passed",tag.getName());
+                continue;
+            }
             newRow = new TableRow(this);
             check = new CheckBox(this);
 
@@ -460,4 +467,5 @@ public class Example extends Activity {
         }
 
     }
+
 }

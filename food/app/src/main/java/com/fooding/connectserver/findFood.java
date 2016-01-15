@@ -3,15 +3,18 @@ package com.fooding.connectserver;
 
 import android.util.Log;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.example.yoonmin.sgen.Example;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URLConnection;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,69 +26,73 @@ import org.json.JSONObject;
 
 public class findFood {
 
-    String search_url = "http://api.nal.usda.gov/ndb/search/?";
-    String api_key = "&api_key=Jx0U18MOGfyfJMuIGsI61Mgh3q3jPTGfFCKFLjvO";
+    String search_url = "http://api.nal.usda.gov/ndb/search/?format=json&";
+    String api_key = "api_key=Jx0U18MOGfyfJMuIGsI61Mgh3q3jPTGfFCKFLjvO";
 
     public boolean canfind(String tag)
     {
-        String request = search_url + api_key + "&q="+tag;
+        String requests = search_url + api_key + "&q="+tag;
 
         try {
-            JSONObject json = new JSONObject(readJSON(request));
-            if (!json.getBoolean(tag))
+            URL url = new URL(requests);
+            Food food = readJSON(url);
+            if (food.dbnum == 0)
                 return false;
             return true;
-        } catch(JSONException e) {
+        }
+        catch (MalformedURLException e) {
+            e.printStackTrace();
             return false;
         }
     }
 
-    public String readJSON(String request){
-        StringBuilder JSONdata = new StringBuilder();
-        HttpClient httpClient = new DefaultHttpClient();
-        byte[] buffer = new byte[1024];
-
-
+    public Food readJSON(URL request) {
+        Food food = new Food();
+        food.dbnum = 0;
         try {
-            HttpGet httpGetRequest = new HttpGet( request );
-            HttpResponse httpResponse = httpClient.execute(httpGetRequest);
+            HttpURLConnection urlConnection = (HttpURLConnection) request.openConnection();
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            JSONObject json = new JSONObject(getStringFromInputStream(in));
 
-            StatusLine statusLine = httpResponse.getStatusLine(); //문자열 HTTP⁄1.1 200 OK
-            int statusCode = statusLine.getStatusCode();
-            if ( statusCode == 200 ) //서버가 요청한 페이지를 제공했다면
-            {
-                HttpEntity entity = httpResponse.getEntity();
-                if (entity != null) {
-                    InputStream inputStream = entity.getContent();
+            food = parseJSON(json);
 
-                    try {
+            return food;
 
-                        int bytesRead = 0;
-                        BufferedInputStream bis = new BufferedInputStream(inputStream);
-
-                        while ((bytesRead = bis.read(buffer) ) != -1) {
-                            String line = new String(buffer, 0, bytesRead);
-
-                            JSONdata.append(line);
-
-                        }
-
-                    } catch (Exception e) {
-                        Log.e("logcat", Log.getStackTraceString(e));
-                    } finally {
-                        try {
-                            inputStream.close();
-                        } catch (Exception ignore) {
-                        }
-                    }
-                }
-            }
-
-        }catch(Exception e){
-            Log.e("logcat", Log.getStackTraceString(e));
-        }finally{
-            httpClient.getConnectionManager().shutdown();
-            return JSONdata.toString();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return food;
+        } catch (Exception e) {
+            food.dbnum = 1;
+            return food;
         }
+    }
+
+    private static String getStringFromInputStream(InputStream is) {
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder();
+
+        String line;
+        try {
+            br = new BufferedReader(new InputStreamReader(is));
+            while((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+
+        return sb.toString();
+    }
+
+    private Food parseJSON(JSONObject json) throws JSONException {
+        Food f = new Food();
+        if(json.getJSONObject("errors") == null )
+        {
+            f.dbnum = 0;
+            return f;
+        }
+        f.dbnum = json.getJSONArray("item").getJSONObject(0).getInt("ndbno");
+        return f;
     }
 }
