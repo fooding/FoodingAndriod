@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/Users/sanghyunjeon/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient-android/4.3.5.1/eecbb0b998e77629862a13d957d552b3be58fc4e/httpclient-android-4.3.5.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="eecbb0b998e77629862a13d957d552b3be58fc4e">
+        <dex dex="/Users/sanghyunjeon/FoodingAndriod/food/app/build/intermediates/pre-dexed/debug/httpclient-android-4.3.5.1_89db46ec583ba4ede9fb87b07b6d92b3612573dd.jar" />
+    </item>
+
+</items>
