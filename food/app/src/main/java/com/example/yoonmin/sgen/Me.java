@@ -8,9 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.fooding.connectserver.Config;
+import com.fooding.connectserver.Configure;
 
-import static com.fooding.connectserver.Config.*;
+import static com.fooding.connectserver.Configure.*;
 
 /**
  * Created by yoonmin on 2015-11-22.
@@ -34,8 +34,8 @@ public class Me extends Activity{
 
                 SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.remove(Config.LOGGEDIN_SHARED_PREF);
-                editor.remove(Config.EMAIL_SHARED_PREF);
+                editor.remove(Configure.LOGGEDIN_SHARED_PREF);
+                editor.remove(Configure.EMAIL_SHARED_PREF);
 
                 editor.remove(SHARED_PREF_NAME);
 

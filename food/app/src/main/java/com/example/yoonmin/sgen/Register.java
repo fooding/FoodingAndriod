@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.fooding.connectserver.userConnect;
-import com.fooding.connectserver.Config;
+import com.fooding.connectserver.Configure;
 import java.util.HashMap;
 /**
  * Created by yoonm on 2016-01-12.
@@ -82,7 +82,7 @@ public class Register extends Activity{
                 data.put("name",params[2]);
                 data.put("phone",params[3]);
 
-                String result = ruc.sendPostRequest(Config.REGISTER_URL,data);
+                String result = ruc.sendPostRequest(Configure.REGISTER_URL,data);
 
                 return result;
             }

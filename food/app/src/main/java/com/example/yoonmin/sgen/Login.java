@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,12 +18,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import com.fooding.connectserver.Config;
+import com.fooding.connectserver.Configure;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.fooding.connectserver.Config.SHARED_PREF_NAME;
-import static com.fooding.connectserver.Config.loggedIn;
+import static com.fooding.connectserver.Configure.SHARED_PREF_NAME;
+import static com.fooding.connectserver.Configure.loggedIn;
 
 /**
  * Created by yoonm on 2016-01-12.
@@ -49,8 +48,8 @@ public class Login extends Activity{
 
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(Config.LOGGEDIN_SHARED_PREF);
-        editor.remove(Config.EMAIL_SHARED_PREF);
+        editor.remove(Configure.LOGGEDIN_SHARED_PREF);
+        editor.remove(Configure.EMAIL_SHARED_PREF);
 
         editor.remove(SHARED_PREF_NAME);
 
@@ -78,10 +77,10 @@ public class Login extends Activity{
     protected void onResume() {
         super.onResume();
         //In onresume fetching value from sharedpreference
-        SharedPreferences sharedPreferences = getSharedPreferences(Config.SHARED_PREF_NAME,Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(Configure.SHARED_PREF_NAME,Context.MODE_PRIVATE);
 
         //Fetching the boolean value form sharedpreferences
-        loggedIn = sharedPreferences.getBoolean(Config.LOGGEDIN_SHARED_PREF, false);
+        loggedIn = sharedPreferences.getBoolean(Configure.LOGGEDIN_SHARED_PREF, false);
 
         //If we will get true
         if(loggedIn){
@@ -92,24 +91,24 @@ public class Login extends Activity{
     }
 
     private void login() {
-        final String email = Edit_ID.getText().toString().trim();
-        final String password = Edit_PW.getText().toString().trim();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.LOGIN_URL,
+        Configure.email = Edit_ID.getText().toString().trim();
+        Configure.password = Edit_PW.getText().toString().trim();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Configure.LOGIN_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         //If we are getting success from server
-                        if(response.equalsIgnoreCase(Config.LOGIN_SUCCESS)){
+                        if(response.equalsIgnoreCase(Configure.LOGIN_SUCCESS)){
                             //Creating a shared preference
 
-                            SharedPreferences sharedPreferences = Login.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+                            SharedPreferences sharedPreferences = Login.this.getSharedPreferences(Configure.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
                             //Creating editor to store values to shared preferences
                             SharedPreferences.Editor editor = sharedPreferences.edit();
 
                             //Adding values to editor
-                            editor.putBoolean(Config.LOGGEDIN_SHARED_PREF, true);
-                            editor.putString(Config.EMAIL_SHARED_PREF, email);
+                            editor.putBoolean(Configure.LOGGEDIN_SHARED_PREF, true);
+                            editor.putString(Configure.EMAIL_SHARED_PREF, Configure.email);
 
                             //Saving values to editor
                             editor.commit();
@@ -135,8 +134,8 @@ public class Login extends Activity{
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
                 //Adding parameters to request
-                params.put(Config.KEY_EMAIL, email);
-                params.put(Config.KEY_PASSWORD, password);
+                params.put(Configure.KEY_EMAIL, Configure.email);
+                params.put(Configure.KEY_PASSWORD, Configure.password);
 
                 //returning parameter
                 return params;

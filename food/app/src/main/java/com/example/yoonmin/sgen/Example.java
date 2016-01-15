@@ -1,6 +1,7 @@
 package com.example.yoonmin.sgen;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.graphics.Bitmap.Config;
 import android.content.Intent;
@@ -9,25 +10,44 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
 
 import android.hardware.Camera;
 import android.hardware.Camera.Size;
 import android.os.Environment;
+import android.widget.Toast;
+
 import com.clarifai.api.ClarifaiClient;
 import com.clarifai.api.RecognitionRequest;
 import com.clarifai.api.RecognitionResult;
 import com.clarifai.api.Tag;
 import com.clarifai.api.exception.ClarifaiException;
+import com.fooding.connectserver.Configure;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
+
 import static android.provider.MediaStore.Images.Media;
 
 /**
@@ -48,17 +68,20 @@ public class Example extends Activity {
 
     private static final int CODE_PICK = 1;
     private static final int TAKE_PICTURE=2;
-
+    private static final int UPLOAD_PICTURE = 3;
+    public static final String UPLOAD_URL = "http://211.202.243.45/writeDiary.php";
     private final ClarifaiClient client = new ClarifaiClient(APP_ID, APP_SECRET);
     private Button selectButton,takeButton,okButton;
     private ImageView imageView;
     private TextView textView;
 
+    private Bitmap bitmap;
 
+    private Uri filePathByUri;
     private String filePath;
     private String folderName = "Arcanelux";// 폴더명
     private String fileName = "CameraIntent"; // 파일명
-
+    public static final String UPLOAD_KEY = "image";
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clarifai);
@@ -68,15 +91,51 @@ public class Example extends Activity {
         selectButton = (Button) findViewById(R.id.select_button);
         okButton=(Button) findViewById(R.id.OK);
 
+
+
+
+
+
+
+
+
+        ////////////////////////////////////////////////////////////////////////////
+
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getApplicationContext(),Write.class);
-                startActivity(intent);
+                uploadImage();
 
             }
         });
+
+
+
+
+
+
+
+
+
+
+
+
+        ////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +207,7 @@ public class Example extends Activity {
         if (requestCode == CODE_PICK && resultCode == RESULT_OK) {
             // The user picked an image. Send it to Clarifai for recognition.
             Log.d(TAG, "User picked image: " + intent.getData());
-            Bitmap bitmap = loadBitmapFromUri(intent.getData());
+            bitmap = loadBitmapFromUri(intent.getData());
             if (bitmap != null) {
                 imageView.setImageBitmap(bitmap);
                 textView.setText("Recognizing...");
@@ -171,8 +230,8 @@ public class Example extends Activity {
         else if(requestCode == TAKE_PICTURE && resultCode == RESULT_OK){
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Config.RGB_565;
-            Bitmap bm = BitmapFactory.decodeFile(filePath, options);
-            imageView.setImageBitmap(bm);
+            bitmap = BitmapFactory.decodeFile(filePath, options);
+            imageView.setImageBitmap(bitmap);
             textView.setText("Recognizing...");
             selectButton.setEnabled(false);
 
@@ -183,9 +242,30 @@ public class Example extends Activity {
                 @Override protected void onPostExecute(RecognitionResult result) {
                     updateUIForResult(result);
                 }
-            }.execute(bm);
+            }.execute(bitmap);
 
         }
+
+/////////////////////////////////
+        /*
+         else if (requestCode == UPLOAD_PICTURE && resultCode == RESULT_OK && intent != null && intent.getData() != null) {
+
+            filePathByUri = intent.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePathByUri);
+                imageView.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        */
+///////////////////////////////
+
+
+
+
+
+
     }
 
     /** Loads a Bitmap from a content URI returned by the media picker. */
@@ -292,4 +372,48 @@ public class Example extends Activity {
         Log.d(TAG, "결과 OptimalPictureSize : " + optSize.width + ", " + optSize.height);
         return optSize;
     }
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
+
+    private void uploadImage(){
+        class UploadImage extends AsyncTask<Bitmap,Void,String>{
+
+            RequestHandler rh = new RequestHandler();
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            protected String doInBackground(Bitmap... params) {
+                Bitmap bitmap = params[0];
+                String uploadImage = getStringImage(bitmap);
+
+                HashMap<String,String> data = new HashMap<>();
+                data.put(UPLOAD_KEY, uploadImage);
+                data.put(Configure.KEY_EMAIL, Configure.email);
+
+                String result = rh.sendPostRequest(UPLOAD_URL,data);
+
+                return result;
+            }
+        }
+
+        UploadImage ui = new UploadImage();
+        ui.execute(bitmap);
+    }
+
 }

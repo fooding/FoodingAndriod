@@ -3,11 +3,13 @@ package com.fooding.connectserver;
 /**
  * Created by davinnovation on 2016-01-13.
  */
-public class Config {
+public class Configure {
     //URL to our login.php file
    // public static final String LOGIN_URL = "http://foodingtest.azurewebsites.net/login.php";
 
     public static final String LOGIN_URL = "http://211.202.243.45/login.php";
+    public static final String UPLOAD_URL = "http://211.202.243.45/write.php";
+
     //Keys for email and password as defined in our $_POST['key'] in login.php
 
     //private static final String REGISTER_URL = "http://foodingtest.azurewebsites.net/register.php";
@@ -29,4 +31,11 @@ public class Config {
 
     //We will use this to store the boolean in sharedpreference to track user is loggedin or not
     public static final String LOGGEDIN_SHARED_PREF = "loggedin";
+
+
+    public static String email=null;
+    public static String password = null;
+
+
+
 }
