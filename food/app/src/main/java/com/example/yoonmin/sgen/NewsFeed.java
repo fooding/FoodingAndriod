@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,11 +22,15 @@ import java.util.ArrayList;
 /**
  * Created by yoonmin on 2015-11-22.
  */
-public class NewsFeed extends Activity{
+public class NewsFeed extends Activity {
+
+    int countDiary = 0;
 
     TextView Tag1, Tag2, Tag3, Tag4, UserName, How, Where, When, Timeset, Text_Title, Text_information;
 
     ImageView UserPicture, UploadPicture;
+
+    int lastview = 0;
 
     Button Btn_Overflow, Btn_Like, Btn_Comment, Btn_With;
 
@@ -32,33 +38,52 @@ public class NewsFeed extends Activity{
 
     ListView listview;
 
+    private final static int INSERT_COUNT = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newsfeed);
 
-        listview = (ListView)findViewById(R.id.list);
+        listview = (ListView) findViewById(R.id.list);
 
         adapter = new Adapter(this);
 
-        listview.setAdapter(adapter);
-
-        // 유저 사진, 업로드 사진 사이즈 변경 필요.
-
         adapter.additem(getResources().getDrawable(R.drawable.shh_2), getResources().getDrawable(R.drawable.shh_1),
-                "전상현", "20", "여주 어느 펜션", "5", "분 전", "1월 2일의 저녁",
-                "나는 왜 고기를 구워야 하는가... 내 앞에 있는 최승은 짜증나지만 고기는 맛있다!" , "여주", "어느 펜션", "삽겹살", "연기");
-        adapter.additem(getResources().getDrawable(R.drawable.kym), getResources().getDrawable(R.drawable.jajang),
-                "Yoonmin Kim", "20", "강남 가로수길", "5", "분 전", "1월 4일의 점심",
-                "이 짜장면 집은 면발이 억수로 부드럽고 양념맛이 매우 좋다. 위생도 좋아보인다." , "강남", "가로수길", "짜장면", "성공");
-        adapter.additem(getResources().getDrawable(R.drawable.pin_icon), getResources().getDrawable(R.drawable.jajang),
-                "전상현", "20", "강남 가로수길", "5", "분 전", "1월 4일의 점심",
-                "이 짜장면 집은 면발이 억수로 부드럽고 양념맛이 매우 좋다. 위생도 좋아보인다." , "강남", "가로수길", "짜장면", "성공");
+                "전상현", "20", "여주 어느 펜션", "" + countDiary++, "분 전", "1월 2일의 저녁",
+                "나는 왜 고기를 구워야 하는가... 내 앞에 있는 최승은 짜증나지만 고기는 맛있다!", "여주", "어느 펜션", "삽겹살", "연기");
 
+        listview.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
 
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if(view.isShown()){
+                    // 리스트뷰의 0 번 인덱스 항목이 리스트뷰의 상단에 보이고 있는 경우
+                    if(listview.getFirstVisiblePosition() == 0) {
+                        // 항목을 추가한다.
+
+                            adapter.additem(getResources().getDrawable(R.drawable.shh_2), getResources().getDrawable(R.drawable.shh_1),
+                                    "전상현", "20", "여주 어느 펜션", ""+countDiary++, "분 전", "1월 2일의 저녁",
+                                    "나는 왜 고기를 구워야 하는가... 내 앞에 있는 최승은 짜증나지만 고기는 맛있다!" , "여주", "어느 펜션", "삽겹살", "연기");
+//                        adapter.additem(UserPicture, UploadPicture, UserName, How, Where, When, Timeset
+//                        , Text_Title, Text_information, Tag1, Tag2, Tag3, Tag4);
+
+                        // 0 번 인덱스 항목 위로 INSERT_COUNT 개수의 항목이 추가되었으므로
+                        // 기존의 0 번 인덱스 항목은 INSERT_COUNT 번 인덱스가 되었다.
+                        // 기존 0번 항목이 보여져서 항목이 추가될때 해당 항목의 모든 영역이
+                        // 보이지않았을 수도 있으므로 이미 모든 영역이 노출됐던 INSERT_COUNT + 1
+                        // 항목을 보이도록 설정하여 스크롤을 부드럽게 보이도록 한다.
+                        view.setSelection(INSERT_COUNT + 1);
+                    }
+                }
+            }
+        });
+        listview.setAdapter(adapter);
     }
-
-
     class Adapter extends BaseAdapter{
 
         private Context mContext;
@@ -131,6 +156,8 @@ public class NewsFeed extends Activity{
 
         }
 
+
+
         public void additem(Drawable Userpicture, Drawable UploadPicture,
                             String UserName, String How, String Where, String When, String Timeset, String Text_Title,
                             String Text_information, String Tag1, String Tag2, String Tag3, String Tag4) {
@@ -156,7 +183,8 @@ public class NewsFeed extends Activity{
             arrayList.add(info);
 
         }
-    }
 
+
+    }
 }
 
