@@ -12,14 +12,23 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.hardware.Camera;
 import android.hardware.Camera.Size;
 import android.os.Environment;
+import android.widget.Toast;
+
 import com.clarifai.api.ClarifaiClient;
 import com.clarifai.api.RecognitionRequest;
 import com.clarifai.api.RecognitionResult;
@@ -52,18 +61,20 @@ public class Example extends Activity {
     private final ClarifaiClient client = new ClarifaiClient(APP_ID, APP_SECRET);
     private Button selectButton,takeButton,okButton;
     private ImageView imageView;
-    private TextView textView;
-
+    private TableLayout table;
+    private int Count = 0;
 
     private String filePath;
     private String folderName = "Arcanelux";// 폴더명
     private String fileName = "CameraIntent"; // 파일명
 
+    private ArrayList<CheckBox> taglist = new ArrayList<>();
+
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clarifai);
         imageView = (ImageView) findViewById(R.id.image_view);
-        textView = (TextView) findViewById(R.id.text_view);
+        table = (TableLayout) findViewById(R.id.table);
         takeButton=(Button) findViewById(R.id.take_button);
         selectButton = (Button) findViewById(R.id.select_button);
         okButton=(Button) findViewById(R.id.OK);
@@ -72,9 +83,20 @@ public class Example extends Activity {
             @Override
             public void onClick(View v) {
 
+                String tags ="";
+
+                for(int i = 0;i<taglist.size();i++)
+                {
+                    if(taglist.get(i).isChecked())
+                        tags += ("#" + taglist.get(i).getText() );
+
+                }
+
+                Log.d("checkedTAG",tags);
+/*
                 Intent intent = new Intent(getApplicationContext(),Write.class);
                 startActivity(intent);
-
+*/
             }
         });
         selectButton.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +173,7 @@ public class Example extends Activity {
             Bitmap bitmap = loadBitmapFromUri(intent.getData());
             if (bitmap != null) {
                 imageView.setImageBitmap(bitmap);
-                textView.setText("Recognizing...");
+                Toast.makeText(getApplicationContext(), "Recognizing...", Toast.LENGTH_SHORT).show();
                 selectButton.setEnabled(false);
                 // Run recognition on a background thread since it makes a network call.
                 new AsyncTask<Bitmap, Void, RecognitionResult>() {
@@ -163,8 +185,7 @@ public class Example extends Activity {
                     }
                 }.execute(bitmap);
             } else {
-                textView.setText("Unable to load selected image.");
-
+                Toast.makeText(getApplicationContext(), "Unable to load selected image.", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -173,7 +194,7 @@ public class Example extends Activity {
             options.inPreferredConfig = Config.RGB_565;
             Bitmap bm = BitmapFactory.decodeFile(filePath, options);
             imageView.setImageBitmap(bm);
-            textView.setText("Recognizing...");
+            Toast.makeText(getApplicationContext(), "Recognizing...", Toast.LENGTH_SHORT).show();
             selectButton.setEnabled(false);
 
             new AsyncTask<Bitmap, Void, RecognitionResult>() {
@@ -243,17 +264,13 @@ public class Example extends Activity {
         if (result != null) {
             if (result.getStatusCode() == RecognitionResult.StatusCode.OK) {
                 // Display the list of tags in the UI.
-                StringBuilder b = new StringBuilder();
-                for (Tag tag : result.getTags()) {
-                    b.append(b.length() > 0 ? ", " : "").append(tag.getName());
-                }
-                textView.setText("Tags:\n" + b);
+                addRadioitem(result);
             } else {
                 Log.e(TAG, "Clarifai: " + result.getStatusMessage());
-                textView.setText("Sorry, there was an error recognizing your image.");
+                Toast.makeText(getApplicationContext(), "Sorry, there was an error recognizing your image.", Toast.LENGTH_SHORT).show();
             }
         } else {
-            textView.setText("Sorry, there was an error recognizing your image.");
+            Toast.makeText(getApplicationContext(), "Sorry, there was an error recognizing your image.", Toast.LENGTH_SHORT).show();
         }
         selectButton.setEnabled(true);
     }
@@ -291,5 +308,30 @@ public class Example extends Activity {
         }
         Log.d(TAG, "결과 OptimalPictureSize : " + optSize.width + ", " + optSize.height);
         return optSize;
+    }
+
+    private void addRadioitem(RecognitionResult result){
+        StringBuilder b = new StringBuilder();
+        for (Tag tag : result.getTags()) {
+
+            TableRow newRow = new TableRow(this);
+            CheckBox check = new CheckBox(this);
+
+            check.setId(Count);
+            check.setText(tag.getName());
+
+//            radioButton[Count] = radio;
+//            radioButton[Count].setId(Count);
+//            radioButton[Count].setText(tag.getName());
+
+            Log.d("id", String.valueOf(check.getId()));
+            Log.d("tag", tag.getName());
+
+            newRow.addView(check);
+            table.addView(newRow);
+
+            taglist.add(check);
+            Count++;
+        }
     }
 }
