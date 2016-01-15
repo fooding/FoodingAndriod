@@ -30,11 +30,13 @@ public class NewsFeed extends Activity {
 
     ImageView UserPicture, UploadPicture;
 
-    int lastview = 0;
-
-    Button Btn_Overflow, Btn_Like, Btn_Comment, Btn_With;
+    Button Btn_Overflow, Btn_Like, Btn_Comment, Btn_With, Btn_New_Newsfeed;
 
     Adapter adapter = null;
+
+    ArrayList arrayList = new ArrayList();
+
+    int Count = 0;
 
     ListView listview;
 
@@ -45,44 +47,27 @@ public class NewsFeed extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newsfeed);
 
+        Btn_New_Newsfeed = (Button) findViewById(R.id.Btn_New_Newsfeed);
         listview = (ListView) findViewById(R.id.list);
 
         adapter = new Adapter(this);
 
-        adapter.additem(getResources().getDrawable(R.drawable.shh_2), getResources().getDrawable(R.drawable.shh_1),
-                "전상현", "20", "여주 어느 펜션", "" + countDiary++, "분 전", "1월 2일의 저녁",
-                "나는 왜 고기를 구워야 하는가... 내 앞에 있는 최승은 짜증나지만 고기는 맛있다!", "여주", "어느 펜션", "삽겹살", "연기");
-
-        listview.setOnScrollListener(new AbsListView.OnScrollListener() {
+        Btn_New_Newsfeed.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            public void onClick(View v) {
 
-            }
+                for(int i = 0 ; i < 5 ; i++){
 
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if(view.isShown()){
-                    // 리스트뷰의 0 번 인덱스 항목이 리스트뷰의 상단에 보이고 있는 경우
-                    if(listview.getFirstVisiblePosition() == 0) {
-                        // 항목을 추가한다.
-
-                            adapter.additem(getResources().getDrawable(R.drawable.shh_2), getResources().getDrawable(R.drawable.shh_1),
-                                    "전상현", "20", "여주 어느 펜션", ""+countDiary++, "분 전", "1월 2일의 저녁",
-                                    "나는 왜 고기를 구워야 하는가... 내 앞에 있는 최승은 짜증나지만 고기는 맛있다!" , "여주", "어느 펜션", "삽겹살", "연기");
-//                        adapter.additem(UserPicture, UploadPicture, UserName, How, Where, When, Timeset
-//                        , Text_Title, Text_information, Tag1, Tag2, Tag3, Tag4);
-
-                        // 0 번 인덱스 항목 위로 INSERT_COUNT 개수의 항목이 추가되었으므로
-                        // 기존의 0 번 인덱스 항목은 INSERT_COUNT 번 인덱스가 되었다.
-                        // 기존 0번 항목이 보여져서 항목이 추가될때 해당 항목의 모든 영역이
-                        // 보이지않았을 수도 있으므로 이미 모든 영역이 노출됐던 INSERT_COUNT + 1
-                        // 항목을 보이도록 설정하여 스크롤을 부드럽게 보이도록 한다.
-                        view.setSelection(INSERT_COUNT + 1);
+                    if((받아오는 값) != null){
+                    adapter.additem(getResources().getDrawable(R.drawable.shh_2), getResources().getDrawable(R.drawable.shh_1),
+                            "전상현", "20", "여주 어느 펜션", "", "분 전", "1월 2일의 저녁",
+                            "나는 왜 고기를 구워야 하는가... 내 앞에 있는 최승은 짜증나지만 고기는 맛있다!", "여주", "어느 펜션", "삽겹살", "연기");
                     }
                 }
+                listview.setAdapter(adapter);
             }
         });
-        listview.setAdapter(adapter);
+
     }
     class Adapter extends BaseAdapter{
 
